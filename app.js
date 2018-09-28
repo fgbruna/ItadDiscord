@@ -8,6 +8,8 @@ const Discord = require('discord.js');
 // Create an instance of a Discord client
 const client = new Discord.Client();
 
+const key = process.env.API_KEY
+
 /**
  * The ready event is vital, it means that only _after_ this will your bot start reacting to information
  * received from Discord
@@ -19,7 +21,7 @@ client.on('ready', () => {
 // Create an event listener for new guild members
 client.on('guildMemberAdd', member => {
     // Send the message to a designated channel on a server:
-    const channel = member.guild.channels.find(ch => ch.name === 'member-log');
+    const channel = member.guild.channels.find(ch => ch.name === 'General');
     // Do nothing if the channel wasn't found on this server
     if (!channel) return;
     // Send the message, mentioning the member
@@ -36,5 +38,5 @@ client.on('message', message => {
 
 
 // Log our bot in using the token from https://discordapp.com/developers/applications/me
-client.login('NDk0OTA0MTk1NjQ4OTc4OTQ3.Do6TdQ.QCOl1XCxM5wM2jir81lZQHmlzkM');
+client.login(key);
 
