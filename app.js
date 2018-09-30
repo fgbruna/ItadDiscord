@@ -1,6 +1,7 @@
 /**
  * A bot that welcomes new guild members when they join
  */
+let gameinfo = require('./library.js').gameInfo;
 
 // Import the discord.js module
 const Discord = require('discord.js');
@@ -8,7 +9,11 @@ const Discord = require('discord.js');
 // Create an instance of a Discord client
 const client = new Discord.Client();
 
-const key = process.env.API_KEY
+const discordKey = process.env.API_KEY
+
+const itadKey = process.env.ITAD_KEY
+
+const prefix = "!";
 
 /**
  * The ready event is vital, it means that only _after_ this will your bot start reacting to information
@@ -28,15 +33,35 @@ client.on('guildMemberAdd', member => {
     channel.send(`Welcome to the server, ${member}`);
 });
 
+process.on('unhandledRejection', (reason, p) => {
+    console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
+    // application specific logging, throwing an error, or other logic here
+});
+
 client.on('message', message => {
+
     console.log(message.content);
-    if (message.content === '!ping') {
-        // send back "Pong." to the channel the message was sent in
-        message.channel.send('Pong.');
+
+    if (!message.content.startsWith(prefix) || message.author.bot) return;
+
+    const args = message.content.slice(prefix.length).split(/ +/);
+
+    const command = args.shift().toLowerCase();
+
+    if (command === "info") {
+        gameinfo(itadKey, args[0]) // fetch info about game
+            .then(function (respuestas) {
+                // then send it to the channel
+                message.channel.send(JSON.stringify(respuestas.data));
+            });
+    }
+
+    else if (command === "ping") {
+        message.channel.send('Que te pasa maldyto' + message.author);
     }
 });
 
 
 // Log our bot in using the token from https://discordapp.com/developers/applications/me
-client.login(key);
+client.login(discordKey);
 
