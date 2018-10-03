@@ -1,4 +1,4 @@
-let fetch = require('isomorphic-fetch');
+const fetch = require('isomorphic-fetch');
 
 const util = require('util');
 
@@ -7,7 +7,7 @@ const util = require('util');
 
 function gameInfo(key, game) {
 
-    let url = util.format('https://api.isthereanydeal.com/v01/game/info/?key=%s&plains=%s', key, game);
+    let url = util.format(`https://api.isthereanydeal.com/v01/game/info/?key=${key}&plains=${game}`);
     return fetch(url)
         .then(function (response) {
             return response.json();
@@ -17,4 +17,6 @@ function gameInfo(key, game) {
         });
 }
 
-module.exports = { gameInfo };
+module.exports = {
+    gameInfo
+};

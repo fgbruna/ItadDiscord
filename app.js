@@ -1,7 +1,7 @@
 /**
  * A bot that welcomes new guild members when they join
  */
-let gameinfo = require('./library.js').gameInfo;
+const gameinfo = require('./library.js').gameInfo;
 
 // Import the discord.js module
 const Discord = require('discord.js');
@@ -52,11 +52,9 @@ client.on('message', message => {
         gameinfo(itadKey, args[0]) // fetch info about game
             .then(function (respuestas) {
                 // then send it to the channel
-                message.channel.send(JSON.stringify(respuestas.data));
+                message.channel.send(JSON.stringify(respuestas['data'][args[0]]['urls']));
             });
-    }
-
-    else if (command === "ping") {
+    } else if (command === "ping") {
         message.channel.send('Que te pasa maldyto' + message.author);
     }
 });
@@ -64,4 +62,3 @@ client.on('message', message => {
 
 // Log our bot in using the token from https://discordapp.com/developers/applications/me
 client.login(discordKey);
-
