@@ -1,5 +1,5 @@
 {
-  "name": "itatdiscord",
+  "name": "itaddiscord",
   "version": "1.0.0",
   "description": "Discord bot that displays info about deals in digital pc games",
   "main": "app.js",
