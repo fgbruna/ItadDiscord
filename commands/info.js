@@ -11,7 +11,6 @@ async function gameInfo(key, game) {
 
 function fmt(response, args) {
 	// once the promise is resolved, do this
-	console.log(response.data[args[0]]);
 	const data = response.data[args[0]];
 	const steam = data.reviews.steam.perc_positive;
 	const page = data.urls.game;
